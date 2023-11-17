@@ -12,11 +12,10 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Viewbox>
-            <local:PlacementGrid x:Name="placementGrid" UnitSize="80" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>
+            <local:PlacementGrid Margin="40" x:Name="placementGrid" FehrUnitSize="4" LogimatUnitSize="80" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>
         </Viewbox>
 
         <!--<local:PlacementGridOld x:Name="newPlacementGrid"/>-->
@@ -24,12 +23,13 @@
 
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
+            <TextBox Margin="12" x:Name="RessourceType" Width="200"/>
 
             <TextBox Margin="12" x:Name="inputBox2" Width="200"/>
             <Button Margin="12" x:Name="button3" Height="40" Content="Switch to layout" Click="button_ChangeLayout"/>
             <Button Margin="12" Height="40" Content="Switch to Text Screen" Click="button_SetToTextScreen"/>
 
-
+            <!--<local:PlacementGrid x:Name="placementGrid2" UnitSize="30" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>-->
         </StackPanel>
 
         <!--<local:PlacementGrid_TextScreen/>-->

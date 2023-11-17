@@ -38,6 +38,31 @@ namespace INOXCanvasPrototype
 
 
 
+        public int FehrUnitSize
+        {
+            get { return (int)GetValue(FehrUnitSizeProperty); }
+            set { SetValue(FehrUnitSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FehrUnitSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FehrUnitSizeProperty =
+            DependencyProperty.Register("FehrUnitSize", typeof(int), typeof(PlacementGrid), new PropertyMetadata(1));
+
+
+
+
+        public int LogimatUnitSize
+        {
+            get { return (int)GetValue(LogimatUnitSizeProperty); }
+            set { SetValue(LogimatUnitSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LogimatUnitSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LogimatUnitSizeProperty =
+            DependencyProperty.Register("LogimatUnitSize", typeof(int), typeof(PlacementGrid), new PropertyMetadata(80));
+
+
+
 
         public int HeightUnits
         {
@@ -168,7 +193,7 @@ namespace INOXCanvasPrototype
             {
                 Instance.posCanvas.Children.Clear();
 
-                DrawTextScreen("Layout is null", true);
+                DrawTextScreenInternal("Layout is null", true);
             }
         }
 
@@ -181,10 +206,12 @@ namespace INOXCanvasPrototype
                 //Not good - Add dependency property to control fehr unitsize and logimat unitsize separetly, and maby switch between them with bool
                 if(Layout.RessourceType == "Fehr")
                 {
-                    Instance.UnitSize = 1;
+                    Instance.UnitSize = Instance.FehrUnitSize;
+                } else {
+                    Instance.UnitSize = Instance.LogimatUnitSize;
                 }
 
-                s
+                
                 Instance.HeightUnits = Layout.LengthUnits;
                 Instance.WidthUnits = Layout.WidthUnits;
 
@@ -199,13 +226,9 @@ namespace INOXCanvasPrototype
                 }
             }
 
-
-
-
-
         }
 
-        public static void DrawTextScreen(string text, bool isError = false)
+        public void DrawTextScreen(string text, bool isError = false)
         {
             Instance.Layout = null;
 
@@ -216,6 +239,29 @@ namespace INOXCanvasPrototype
             pg_textscreen.isError = isError;
 
             Instance.posCanvas.Children.Add(pg_textscreen);
+        }
+
+        static internal void DrawTextScreenInternal(string text, bool isError = false)
+        {
+            Instance.Layout = null;
+
+            Instance.posCanvas.Children.Clear();
+            PlacementGrid_TextScreen pg_textscreen = new PlacementGrid_TextScreen();
+            pg_textscreen.caller = Instance;
+            pg_textscreen.Text = text;
+            pg_textscreen.isError = isError;
+
+            Instance.posCanvas.Children.Add(pg_textscreen);
+        }
+
+        public void ClearSelection()
+        {
+            foreach (var child in Instance.posCanvas.Children)
+            {
+                PlacementGrid_CasetteSquare cassette = (PlacementGrid_CasetteSquare)child;
+
+                cassette.isSelected = false;
+            }
         }
 
     }

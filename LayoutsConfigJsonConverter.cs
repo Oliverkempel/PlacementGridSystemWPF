@@ -21,12 +21,12 @@ namespace INOXCanvasPrototype
 
     public partial class LayoutsConfigJsonConverter
     {
-        public static List<Layout> FromJson(string json) => JsonConvert.DeserializeObject<List<Layout>>(json, INOXCanvasPrototype.Converter.Settings);
+        public static List<LayoutsSets> FromJson(string json) => JsonConvert.DeserializeObject<List<LayoutsSets>>(json, INOXCanvasPrototype.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this List<Layout> self) => JsonConvert.SerializeObject(self, INOXCanvasPrototype.Converter.Settings);
+        public static string ToJson(this List<LayoutsSets> self) => JsonConvert.SerializeObject(self, INOXCanvasPrototype.Converter.Settings);
     }
 
     internal static class Converter

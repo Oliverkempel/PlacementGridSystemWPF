@@ -491,6 +491,8 @@
 
         List<Layout> Layouts = new List<Layout>();
 
+        List<LayoutsSets> LayoutsSets = new List<LayoutsSets>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -512,12 +514,22 @@
         private void button_ChangeLayout(object sender, RoutedEventArgs e)
         {
             string output = inputBox2.Text;
+            string resource = RessourceType.Text;
 
             int int_output = 0;
 
             Int32.TryParse(output, out int_output);
 
-            Layout selectedLayout = Layouts.FirstOrDefault(x => x.LayoutID == int_output);
+            Layout selectedLayout = null;
+
+            try
+            {
+               selectedLayout = LayoutsSets.FirstOrDefault(x => x.Ressource == RessourceType.Text).Layouts.FirstOrDefault(x => x.LayoutID == int_output);
+
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
 
             placementGrid.Layout = selectedLayout;
@@ -528,8 +540,10 @@
         
         private void button_SetToTextScreen(object sender, RoutedEventArgs e)
         {
+            placementGrid.DrawTextScreen("No Lines selected!");
 
-            PlacementGrid.DrawTextScreen("No Lines selected!");
+            //placementGrid.DrawTextScreen("No Lines selected!");
+
 
             
 
@@ -537,6 +551,8 @@
 
         private void placementGrid_OnCassetteClick(object sender, RoutedEventArgs e)
         {
+            placementGrid.ClearSelection();
+
             PlacementGrid_CasetteSquare clickedCasSquare = (PlacementGrid_CasetteSquare)e.Source;
             Cassette cas = clickedCasSquare.CassetteObject;
             if (clickedCasSquare.isSelected == false)
@@ -560,7 +576,7 @@
             {
                 string json = r.ReadToEnd();
 
-                Layouts = LayoutsConfigJsonConverter.FromJson(json);
+                LayoutsSets = LayoutsConfigJsonConverter.FromJson(json);
             }
 
         }
