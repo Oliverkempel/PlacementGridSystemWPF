@@ -1,4 +1,4 @@
-﻿namespace INOXCanvasPrototype
+﻿namespace INOXCanvasPrototype.Models
 {
     using Newtonsoft.Json;
 

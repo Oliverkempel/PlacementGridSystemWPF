@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
@@ -16,6 +18,11 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+
+    using INOXCanvasPrototype.Models;
+    using INOXCanvasPrototype.Components;
+    using INOXCanvasPrototype.Converters;
+
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -493,6 +500,8 @@
 
         List<LayoutsSets> LayoutsSets = new List<LayoutsSets>();
 
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -551,22 +560,37 @@
 
         private void placementGrid_OnCassetteClick(object sender, RoutedEventArgs e)
         {
-            placementGrid.ClearSelection();
+            //placementGrid.ClearSelection();
 
             PlacementGrid_CasetteSquare clickedCasSquare = (PlacementGrid_CasetteSquare)e.Source;
             Cassette cas = clickedCasSquare.CassetteObject;
+
             if (clickedCasSquare.isSelected == false)
             {
-                clickedCasSquare.isSelected = true;
+                placementGrid.SelectCassetteByID(cas.ID);
 
             }
             else
             {
-                clickedCasSquare.isSelected = false;
+                placementGrid.UnSelectCassetteByID(cas.ID);
 
             }
 
             //MessageBox.Show($"Clicked Cassette ID: {cas.ID}");
+
+        }
+        
+        private void button_SetSelectID(object sender, RoutedEventArgs e)
+        {
+            int id;
+
+            if(Int32.TryParse(SelectID.Text, out id)) 
+            {
+                //placementGrid.ClearSelection();
+                placementGrid.SelectCassetteByID(id);
+
+                var selectedcasss = placementGrid.SelectedCassettes;
+            }
 
         }
 
@@ -579,6 +603,21 @@
                 LayoutsSets = LayoutsConfigJsonConverter.FromJson(json);
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                for (int i = 1; i < 139; i++)
+                {
+                    Thread.Sleep(200);
+                    Application.Current.Dispatcher.Invoke(new Action(() => {
+                        placementGrid.SelectCassetteByID(i);
+                        placementGrid.UnSelectCassetteByID(i - 5);
+                    }));
+                }
+            }); 
         }
     }
 }

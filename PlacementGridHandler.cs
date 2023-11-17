@@ -11,6 +11,9 @@
     using System.Windows;
     using System.Windows.Shapes;
 
+    using INOXCanvasPrototype.Models;
+
+
 
     public class PlacementGridHandler
     {

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:INOXCanvasPrototype"
+        xmlns:Components="clr-namespace:INOXCanvasPrototype.Components"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1900">
     <Grid>
@@ -13,24 +14,46 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <Viewbox>
-            <local:PlacementGrid Margin="40" x:Name="placementGrid" FehrUnitSize="4" LogimatUnitSize="80" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>
-        </Viewbox>
-
-        <!--<local:PlacementGridOld x:Name="newPlacementGrid"/>-->
-
-
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBox Margin="12" x:Name="RessourceType" Width="200"/>
-
-            <TextBox Margin="12" x:Name="inputBox2" Width="200"/>
-            <Button Margin="12" x:Name="button3" Height="40" Content="Switch to layout" Click="button_ChangeLayout"/>
-            <Button Margin="12" Height="40" Content="Switch to Text Screen" Click="button_SetToTextScreen"/>
-
-            <!--<local:PlacementGrid x:Name="placementGrid2" UnitSize="30" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>-->
+        <StackPanel Margin="50, 0">
+            <TextBlock Margin="0, 20, 0, 0" Text="Placement Grid:" FontSize="20" FontWeight="Bold"/>
+            <Viewbox>
+                <Components:PlacementGrid x:Name="placementGrid" FehrUnitSize="4" LogimatUnitSize="80" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>
+            </Viewbox>
+            <TextBlock Margin="0, 20, 0, 0" Text="Selected Cassettes:" FontSize="20" FontWeight="Bold"/>
+            <DataGrid IsReadOnly="True" ItemsSource="{Binding ElementName=placementGrid, Path=SelectedCassettes}"/>
         </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Background="#f3f3f3">
+            <TextBlock  Margin="50, 20, 0, 0" Text="Actions:" FontSize="20" FontWeight="Bold"/>
+            <StackPanel Margin="50, 15, 0, 50"  Orientation="Horizontal" VerticalAlignment="Top">
+                <StackPanel Margin="0,0,50,0">
+                    <Label Content="Ressource: (Logimat / Fehr)" FontWeight="SemiBold"/>
+                    <TextBox Height="30" x:Name="RessourceType" Width="200" Text="Logimat" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="0,0,50,0">
+                    <Label Content="LayoutID:" FontWeight="SemiBold"/>
+                    <TextBox Height="30" x:Name="inputBox2" Width="200" VerticalContentAlignment="Center"/>
+                    <Button x:Name="button3" Height="40" Content="Switch to layout" Click="button_ChangeLayout" />
+                </StackPanel>
+
+                <StackPanel Margin="0,0,50,0">
+                    <Label Content="Cassette ID:" FontWeight="SemiBold"/>
+                    <TextBox x:Name="SelectID" Height="30" Width="200" VerticalContentAlignment="Center"/>
+                    <Button Height="40" Content="set Is selcted" Click="button_SetSelectID"/>
+                </StackPanel>
+
+                <StackPanel>
+                    <Label Content="Other:" FontWeight="SemiBold"/>
+                    <Button Height="30" Padding="20,0" Content="Funny button (DEMO)" Click="Button_Click" VerticalAlignment="Center"/>
+                    <Button Height="30" Content="Switch to Text Screen" Click="button_SetToTextScreen" VerticalAlignment="Center"/>
+                </StackPanel>
+
+
+
+                <!--<local:PlacementGrid x:Name="placementGrid2" UnitSize="30" WidthUnits="28" HeightUnits="8" OnCassetteClick="placementGrid_OnCassetteClick"/>-->
+            </StackPanel>
+        </StackPanel>
+
 
         <!--<local:PlacementGrid_TextScreen/>-->
     </Grid>

@@ -1,24 +1,27 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-using static System.Net.Mime.MediaTypeNames;
-
-namespace INOXCanvasPrototype
+﻿namespace INOXCanvasPrototype.Components
 {
+    using System;
+    using System.CodeDom;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
+
+    using INOXCanvasPrototype.Models;
+
+    using static System.Net.Mime.MediaTypeNames;
+
+
     /// <summary>
     /// Interaction logic for PlacementGrid.xaml
     /// </summary>
@@ -152,6 +155,20 @@ namespace INOXCanvasPrototype
             DependencyProperty.Register("Cassettes", typeof(Layout), typeof(PlacementGrid), new PropertyMetadata(null, onCalledDrawLayout));
 
 
+
+        public List<Cassette> SelectedCassettes
+        {
+            get { return (List<Cassette>)GetValue(SelectedCassettesProperty); }
+            set { SetValue(SelectedCassettesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedCassettes.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedCassettesProperty =
+            DependencyProperty.Register("SelectedCassettes", typeof(List<Cassette>), typeof(PlacementGrid), new PropertyMetadata(null));
+
+
+
+
         public event RoutedEventHandler OnCassetteClick;
         private void posCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -256,12 +273,92 @@ namespace INOXCanvasPrototype
 
         public void ClearSelection()
         {
-            foreach (var child in Instance.posCanvas.Children)
+            if(Instance.posCanvas.Children != null)
             {
-                PlacementGrid_CasetteSquare cassette = (PlacementGrid_CasetteSquare)child;
+                foreach (var child in Instance.posCanvas.Children)
+                {
+                    if(child.GetType() == typeof(PlacementGrid_CasetteSquare))
+                    {
 
-                cassette.isSelected = false;
+                        PlacementGrid_CasetteSquare cassette = (PlacementGrid_CasetteSquare)child;
+
+                        SetSelectStateOfCassette(cassette.CassetteObject.ID, false);
+
+                    }
+
+                }
             }
+           
+        }
+
+        public void SelectCassetteByID(int ID)
+        {
+            SetSelectStateOfCassette(ID, true);
+
+        }
+
+        public void UnSelectCassetteByID(int ID)
+        {
+           SetSelectStateOfCassette(ID, false);
+        }
+
+        internal void SetSelectStateOfCassette(int ID, bool SetIsSelectedTo)
+        {
+            if (Instance.posCanvas.Children != null)
+            {
+                foreach (var child in Instance.posCanvas.Children)
+                {
+                    if (child.GetType() == typeof(PlacementGrid_CasetteSquare))
+                    {
+                        PlacementGrid_CasetteSquare cassette = (PlacementGrid_CasetteSquare)child;
+
+                        if (cassette.CassetteObject.ID == ID)
+                        {
+                            if(SetIsSelectedTo)
+                            {
+                                cassette.isSelected = true;
+
+                                //Update Selected Items Dependency property
+                                SelectedCassettes = GetCurrentSelectedCassettes();
+                            } else
+                            {
+                                cassette.isSelected = false;
+
+                                //Update Selected Items Dependency property
+                                SelectedCassettes = GetCurrentSelectedCassettes();
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        public List<Cassette> GetCurrentSelectedCassettes()
+        {
+            List<Cassette> selectedCassettes = new List<Cassette>();
+
+
+            if (Instance.posCanvas.Children != null)
+            {
+                foreach (var child in Instance.posCanvas.Children)
+                {
+                    if (child.GetType() == typeof(PlacementGrid_CasetteSquare))
+                    {
+                        PlacementGrid_CasetteSquare cassette = (PlacementGrid_CasetteSquare)child;
+
+                        if (cassette.isSelected == true)
+                        {
+                            if(!selectedCassettes.Contains(cassette.CassetteObject))
+                            {
+                                selectedCassettes.Add(cassette.CassetteObject);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return selectedCassettes;
         }
 
     }

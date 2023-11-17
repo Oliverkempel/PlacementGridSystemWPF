@@ -1,15 +1,16 @@
-﻿<UserControl x:Class="INOXCanvasPrototype.PlacementGrid"
+﻿<UserControl x:Class="INOXCanvasPrototype.Components.PlacementGrid"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:INOXCanvasPrototype"
+             xmlns:Components="clr-namespace:INOXCanvasPrototype.Components"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="1000">
     <Grid>
 
         <Border x:Name="posCanvasBorder" BorderBrush="Black" BorderThickness="2" Background="black" VerticalAlignment="Center" HorizontalAlignment="Center" ClipToBounds="True">
-            <Canvas x:Name="posCanvas"  Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PlacementGrid}}, Path=CanvasHeight}" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PlacementGrid}}, Path=CanvasWidth}" Background="#f4f4f4" MouseDown="posCanvas_MouseDown"/>
+            <Canvas x:Name="posCanvas" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Components:PlacementGrid}}, Path=CanvasHeight}" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Components:PlacementGrid}}, Path=CanvasWidth}" Background="#f4f4f4" MouseDown="posCanvas_MouseDown"/>
         </Border>
 
 

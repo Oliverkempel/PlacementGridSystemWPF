@@ -6,7 +6,7 @@
 //
 //    var layoutsConfigJsonConverter = LayoutsConfigJsonConverter.FromJson(jsonString);
 
-namespace INOXCanvasPrototype
+namespace INOXCanvasPrototype.Converters
 {
     using System;
     using System.Collections.Generic;
@@ -17,16 +17,18 @@ namespace INOXCanvasPrototype
     using Newtonsoft.Json.Converters;
 
     using INOXCanvasPrototype;
+    using INOXCanvasPrototype.Models;
+    using INOXCanvasPrototype.Converters;
 
 
     public partial class LayoutsConfigJsonConverter
     {
-        public static List<LayoutsSets> FromJson(string json) => JsonConvert.DeserializeObject<List<LayoutsSets>>(json, INOXCanvasPrototype.Converter.Settings);
+        public static List<LayoutsSets> FromJson(string json) => JsonConvert.DeserializeObject<List<LayoutsSets>>(json, INOXCanvasPrototype.Converters.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this List<LayoutsSets> self) => JsonConvert.SerializeObject(self, INOXCanvasPrototype.Converter.Settings);
+        public static string ToJson(this List<LayoutsSets> self) => JsonConvert.SerializeObject(self, INOXCanvasPrototype.Converters.Converter.Settings);
     }
 
     internal static class Converter

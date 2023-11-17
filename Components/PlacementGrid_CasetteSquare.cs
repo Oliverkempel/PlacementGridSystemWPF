@@ -1,4 +1,4 @@
-﻿namespace INOXCanvasPrototype
+﻿namespace INOXCanvasPrototype.Components
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,9 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+
+    using INOXCanvasPrototype.Models;
+
 
     /// <summary>
     /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
