@@ -102,7 +102,7 @@
         {
             UpdateCanvasActualHeight(d);
             UpdateCanvasActualWidth(d);
-            if(Instance.Layout != null)
+            if(Instance.Layout != null && Instance.Layout.isNotEmpty == true)
             {
                 DrawLayout(Instance.Layout);
             }
@@ -152,19 +152,19 @@
 
         // Using a DependencyProperty as the backing store for Layout.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LayoutProperty =
-            DependencyProperty.Register("Cassettes", typeof(Layout), typeof(PlacementGrid), new PropertyMetadata(null, onCalledDrawLayout));
+            DependencyProperty.Register("Cassettes", typeof(Layout), typeof(PlacementGrid), new PropertyMetadata(new Layout {isNotEmpty = false}, onCalledDrawLayout));
 
 
 
-        public List<Cassette> SelectedCassettes
+        public List<PlacementGrid_Cassette> SelectedCassettes
         {
-            get { return (List<Cassette>)GetValue(SelectedCassettesProperty); }
+            get { return (List<PlacementGrid_Cassette>)GetValue(SelectedCassettesProperty); }
             set { SetValue(SelectedCassettesProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedCassettes.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedCassettesProperty =
-            DependencyProperty.Register("SelectedCassettes", typeof(List<Cassette>), typeof(PlacementGrid), new PropertyMetadata(null));
+            DependencyProperty.Register("SelectedCassettes", typeof(List<PlacementGrid_Cassette>), typeof(PlacementGrid), new PropertyMetadata(null));
 
 
 
@@ -193,6 +193,7 @@
             InitializeComponent();
 
             //Set default values of dependency properties to make sure callback method runs
+            //Layout = new Layout(); 
             UnitSize = 40;
             HeightUnits = 8;
             WidthUnits = 8;
@@ -202,7 +203,7 @@
         static void onCalledDrawLayout(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Layout Layout = (Layout)e.NewValue;
-            if (Layout != null)
+            if (Layout != null && Layout.isNotEmpty == true)
             {
                 DrawLayout(Layout);
             }
@@ -232,7 +233,7 @@
                 Instance.HeightUnits = Layout.LengthUnits;
                 Instance.WidthUnits = Layout.WidthUnits;
 
-                foreach (Cassette CurCas in Layout.Cassettes)
+                foreach (PlacementGrid_Cassette CurCas in Layout.Cassettes)
                 {
                     PlacementGrid_CasetteSquare casSq = new PlacementGrid_CasetteSquare();
                     casSq.UnitSize = Instance.UnitSize;
@@ -334,9 +335,9 @@
             }
         }
 
-        public List<Cassette> GetCurrentSelectedCassettes()
+        public List<PlacementGrid_Cassette> GetCurrentSelectedCassettes()
         {
-            List<Cassette> selectedCassettes = new List<Cassette>();
+            List<PlacementGrid_Cassette> selectedCassettes = new List<PlacementGrid_Cassette>();
 
 
             if (Instance.posCanvas.Children != null)

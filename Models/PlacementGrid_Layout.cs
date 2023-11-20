@@ -22,7 +22,9 @@
         [JsonProperty("Height")]
         public int Height { get; set; }
         [JsonProperty("Cassettes")]
-        public List<Cassette> Cassettes { get; set; }
+        public List<PlacementGrid_Cassette> Cassettes { get; set; }
+
+        public bool? isNotEmpty { get; set; } = true;
 
         public int getMaxID()
         {

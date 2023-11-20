@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Cassette
+    public class PlacementGrid_Cassette
     {
         [JsonProperty("ID")]
         public int ID { get; set; }

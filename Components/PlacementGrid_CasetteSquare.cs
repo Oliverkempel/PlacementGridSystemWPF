@@ -74,9 +74,9 @@
             DependencyProperty.Register("isSelected", typeof(bool), typeof(PlacementGrid_CasetteSquare), new PropertyMetadata(false));
 
 
-        public Cassette CassetteObject
+        public PlacementGrid_Cassette CassetteObject
         {
-            get { return (Cassette)GetValue(CassetteObjectProperty); }
+            get { return (PlacementGrid_Cassette)GetValue(CassetteObjectProperty); }
             set { SetValue(CassetteObjectProperty, value);
                             //Set cas posisiton
             Canvas.SetLeft(this, CassetteObject.startX * UnitSize);
@@ -86,13 +86,13 @@
 
         // Using a DependencyProperty as the backing store for CassetteObject.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CassetteObjectProperty =
-            DependencyProperty.Register("CassetteObject", typeof(Cassette), typeof(PlacementGrid_CasetteSquare), new PropertyMetadata(null, OnCassetteSizeChanged));
+            DependencyProperty.Register("CassetteObject", typeof(PlacementGrid_Cassette), typeof(PlacementGrid_CasetteSquare), new PropertyMetadata(null, OnCassetteSizeChanged));
 
 
 
         private static void UpdateCassetteActualHeight(DependencyObject d)
         {
-            Cassette casObj = (Cassette)d.GetValue(CassetteObjectProperty);
+            PlacementGrid_Cassette casObj = (PlacementGrid_Cassette)d.GetValue(CassetteObjectProperty);
             if (casObj != null)
             {
                 int UnitSize = (int)d.GetValue(UnitSizeProperty);
@@ -110,7 +110,7 @@
 
         private static void UpdateCassetteActualWidth(DependencyObject d)
         {
-            Cassette casObj = (Cassette)d.GetValue(CassetteObjectProperty);
+            PlacementGrid_Cassette casObj = (PlacementGrid_Cassette)d.GetValue(CassetteObjectProperty);
             if(casObj != null)
             {
                 int UnitSize = (int)d.GetValue(UnitSizeProperty);

@@ -161,7 +161,7 @@
                 selectedLayout = layout;
 
                 initLayout();
-                foreach (Cassette cas in selectedLayout.Cassettes)
+                foreach (PlacementGrid_Cassette cas in selectedLayout.Cassettes)
                 {
                     drawCasette(cas);
                 }
@@ -172,7 +172,7 @@
         {
             if (selectedLayout != null)
             {
-                Cassette cassete = selectedLayout.Cassettes.Where(x => x.ID == CasId).FirstOrDefault();
+                PlacementGrid_Cassette cassete = selectedLayout.Cassettes.Where(x => x.ID == CasId).FirstOrDefault();
                 if (CasId > 0 && CasId <= selectedLayout.getMaxID())
                 {
                     drawCasette(cassete, true);
@@ -182,12 +182,12 @@
 
         public void unhighlightCasette(int CasId)
         {
-            Cassette cassete = selectedLayout.Cassettes.Where(x => x.ID == CasId).FirstOrDefault();
+            PlacementGrid_Cassette cassete = selectedLayout.Cassettes.Where(x => x.ID == CasId).FirstOrDefault();
 
             drawCasette(cassete, false);
         }
 
-        public void drawCasette(Cassette cas, bool isHighlighted = false)
+        public void drawCasette(PlacementGrid_Cassette cas, bool isHighlighted = false)
         {
             double StrokeThickness;
             FontWeight fontWeight;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace INOXCanvasPrototype.Models
 {
-    public class LayoutsSets
+    public class PlacementGrid_LayoutsSets
     {
         [JsonProperty("Ressource")]
         public string Ressource { get; set; }
